@@ -166,3 +166,4 @@ if st.button("🔍 Analyze"):
             st.info("✅ This message is Not Spam!")
     else:
         st.warning("⚠️ Please enter a message to analyze.")
+
