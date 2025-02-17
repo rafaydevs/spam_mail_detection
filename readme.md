@@ -42,7 +42,7 @@ http://localhost:8501
 You should see the email spam classifier app, ready to classify your emails.
 
 Features
-Input an email and check whether it's spam or not.
+Input an email and check whether it's spam or not.\n
 Display a prediction based on the trained model.
 
 
