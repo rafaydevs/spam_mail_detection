@@ -77,13 +77,18 @@
 import streamlit as st
 import pickle
 import string
-from nltk.corpus import stopwords
+import os
 import nltk
+from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
-# Download nltk resources if not already present
-nltk.download('punkt')
-nltk.download('stopwords')
+# Ensure NLTK resources are available before downloading
+nltk_data_path = "/home/appuser/nltk_data"
+if not os.path.exists(nltk_data_path + "/tokenizers/punkt"):
+    nltk.download('punkt')
+
+if not os.path.exists(nltk_data_path + "/corpora/stopwords"):
+    nltk.download('stopwords')
 
 ps = PorterStemmer()
 
@@ -112,11 +117,19 @@ def transform_text(text):
 
     return " ".join(y)
 
-# Load pre-trained model and vectorizer
-tfidf = pickle.load(open('vectorizer.pkl', 'rb'))
-model = pickle.load(open('model.pkl', 'rb'))
+# Load pre-trained model and vectorizer with error handling
+try:
+    with open("vectorizer.pkl", "rb") as f:
+        tfidf = pickle.load(f)
 
-# Enhanced UI
+    with open("model.pkl", "rb") as f:
+        model = pickle.load(f)
+
+except FileNotFoundError:
+    st.error("❌ Model files not found! Ensure 'vectorizer.pkl' and 'model.pkl' are present in the working directory.")
+    st.stop()
+
+# Streamlit UI Configuration
 st.set_page_config(page_title="Spam Detector", page_icon="📧", layout="centered")
 
 # Header with description
@@ -134,7 +147,6 @@ st.markdown(
 )
 
 # Input box with placeholder
-# Input box with placeholder (using text_area for larger input field)
 st.text_area("Email/Text", placeholder="Type your message here...", key="input_sms", height=200)
 
 # Predict button
@@ -154,5 +166,3 @@ if st.button("🔍 Analyze"):
             st.info("✅ This message is Not Spam!")
     else:
         st.warning("⚠️ Please enter a message to analyze.")
-
-
