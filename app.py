@@ -5,7 +5,6 @@ import os
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
-from gmail_integration import fetch_email  
 
 # Ensure NLTK resources are available before downloading
 nltk_data_path = "/home/appuser/nltk_data"
