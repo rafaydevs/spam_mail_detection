@@ -117,7 +117,7 @@ def transform_text(text):
 
     return " ".join(y)
 
-# Load pre-trained model and vectorizer with error handling
+# ✅ Ensure model files exist before loading
 try:
     with open("vectorizer.pkl", "rb") as f:
         tfidf = pickle.load(f)
